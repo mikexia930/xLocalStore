@@ -23,7 +23,7 @@ const currentConfig = config[process.env.LIB_NAME];
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/xLocalStore/',
   plugins: [
     vue(),
     vueJsx()
