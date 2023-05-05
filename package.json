@@ -32,10 +32,8 @@
     "build:lib": "LIB_NAME=lib vite build",
     "build:all": "npm run build:web && npm run build:lib"
   },
-  "dependencies": {
-    "vue": "^3.2.45"
-  },
   "devDependencies": {
+    "vue": "^3.2.45",
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/jsdom": "^20.0.1",
     "@types/node": "^18.11.12",
