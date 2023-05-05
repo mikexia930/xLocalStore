@@ -10,14 +10,14 @@
   "private": false,
   "license": "MIT",
   "files": [
-    "lib/*"
+    "dist/*"
   ],
-  "main": "./lib/xlocalstore.umd.js",
-  "module": "./lib/xlocalstore.es.js",
+  "main": "./dist/xlocalstore.umd.js",
+  "module": "./dist/xlocalstore.es.js",
   "exports": {
     ".": {
-      "import": "./lib/xlocalstore.es.js",
-      "require": "./lib/xlocalstore.umd.js"
+      "import": "./dist/xlocalstore.es.js",
+      "require": "./dist/xlocalstore.umd.js"
     }
   },
   "scripts": {
