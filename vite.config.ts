@@ -8,6 +8,7 @@ import path from 'path';
 const config = {
   web: {
     outDir: './docs',
+    target: ['es2015'],
   },
   lib: {
     outDir: './dist',
