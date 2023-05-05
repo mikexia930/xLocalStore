@@ -1,7 +1,25 @@
 {
-  "name": "dev",
-  "version": "0.0.0",
-  "private": true,
+  "name": "XLocalStore",
+  "description": "Custom store, Use IndexedDB first, if the browser do not support it, change to Localstorage",
+  "keywords": [
+    "IndexedDB",
+    "Localstorage",
+    "浏览器存储"
+  ],
+  "version": "1.0.0",
+  "private": false,
+  "license": "MIT",
+  "files": [
+    "lib/*"
+  ],
+  "main": "./lib/xlocalstore.umd.js",
+  "module": "./lib/xlocalstore.es.js",
+  "exports": {
+    ".": {
+      "import": "./lib/xlocalstore.es.js",
+      "require": "./lib/xlocalstore.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -9,12 +27,13 @@
     "test:unit": "vitest --environment jsdom --root src/",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
-  },
-  "dependencies": {
-    "vue": "^3.2.45"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "build:web": "LIB_NAME=web vite build",
+    "build:lib": "LIB_NAME=lib vite build",
+    "build:all": "npm run build:web && npm run build:lib"
   },
   "devDependencies": {
+    "vue": "^3.2.45",
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/jsdom": "^20.0.1",
     "@types/node": "^18.11.12",

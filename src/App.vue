@@ -35,11 +35,11 @@
 import { reactive } from 'vue';
 import xLocalStore from '../packages/xLocalStore/src/index';
 import {
-  IFConfig as XLocalStoreIFConfig,
+  type IFConfig as XLocalStoreIFConfig,
   EnumStoreType as XLocalStoreEnumStoreType,
 } from '../packages/xLocalStore/src/libs/config';
 
-const data = reactive({
+const data = reactive<any>({
   cur: {
     input: '',
     index: '',
@@ -51,7 +51,7 @@ const data = reactive({
 const storeConfig: Partial<XLocalStoreIFConfig> = {
   dbName: 'testStore',
   tableName: 'testStoreTable',
-  useStores: [ XLocalStoreEnumStoreType.LOCALSTORAGE ]
+  useStores: [ XLocalStoreEnumStoreType.INDEXEDDB, XLocalStoreEnumStoreType.LOCALSTORAGE ]
 }
 const storeIns = new xLocalStore(storeConfig);
 
@@ -71,7 +71,7 @@ storeIns.createTable('index', [
 ]);
 
 function getStoreData() {
-  storeIns.getAll().then((result) => {
+  storeIns.getAll().then((result: any) => {
     data.list = result;
   })
 }
@@ -109,7 +109,7 @@ function handleInput() {
 }
 
 function handleEdit(index: string) {
-  storeIns.get(index).then((result) => {
+  storeIns.get(index).then((result: any) => {
     data.cur.index = index;
     data.cur.input = result.title;
     data.cur.time = result.time;

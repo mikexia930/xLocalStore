@@ -2,13 +2,13 @@ import UseIndexedDB from './libs/indexedDB';
 import UseLocalStorage from './libs/localStorage';
 import {
   EnumStoreType,
-  IFConfig,
-  IFIndexParam,
-  IFSetParam
+  type IFConfig,
+  type IFIndexParam,
+  type IFSetParam
 } from './libs/config';
 
 class xLocalStore {
-  storeIns;
+  storeIns: any;
 
   isIndexedDB = true;
 
@@ -46,7 +46,7 @@ class xLocalStore {
           return false;
         }
       })
-    } catch (e) {
+    } catch (e: any) {
       throw new Error(e);
     }
     if (!this.storeIns.isSupport()) {
@@ -78,7 +78,7 @@ class xLocalStore {
     return this.storeIns.getAll(this.tableName);
   }
 
-  delete(values) {
+  delete(values: string[]) {
     return this.storeIns.delete(this.tableName, values);
   }
 

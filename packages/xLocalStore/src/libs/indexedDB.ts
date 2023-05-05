@@ -1,8 +1,8 @@
 import {
   EnumOperateType,
-  IFSetParam,
-  IFIndexParam,
-  IFClass
+  type IFSetParam,
+  type IFIndexParam,
+  type IFClass
 } from './config';
 
 export default class UseIndexedDB implements IFClass {
@@ -11,7 +11,7 @@ export default class UseIndexedDB implements IFClass {
 
   dbName: string;
 
-  constructor(dbName) {
+  constructor(dbName: string) {
     this.dbName = dbName;
     if (!this.isSupport) {
       throw Error('Browser not support indexDB.');
@@ -97,7 +97,7 @@ export default class UseIndexedDB implements IFClass {
     return new Promise((resolve, reject) => {
       this.connect().then((db: any) => {
         const trans = db.transaction([tableName], operate);
-        trans.onerror = (e) => {
+        trans.onerror = (e: any) => {
           reject(e);
         }
         resolve(trans.objectStore(tableName));
@@ -121,10 +121,10 @@ export default class UseIndexedDB implements IFClass {
         } else {
           request = objectStore.get(value);
         }
-        request.onsuccess = (e) => {
+        request.onsuccess = (e: any) => {
           resolve(e.target.result)
         };
-        request.onerror = (e) => {
+        request.onerror = (e: any) => {
           reject(e)
         };
       })
@@ -136,10 +136,10 @@ export default class UseIndexedDB implements IFClass {
    * @param tableName
    * @param values
    */
-  set(tableName, values: IFSetParam[]) {
+  set(tableName: string, values: IFSetParam[]) {
     return new Promise((resolve) => {
       this.getTransaction(tableName, EnumOperateType.ReadWrite).then((objectStore: any) => {
-        const result = {
+        const result: any = {
           success: [],
           failed: []
         }
@@ -162,10 +162,10 @@ export default class UseIndexedDB implements IFClass {
    * @param tableName
    * @param keys
    */
-  add(tableName, values: IFSetParam[]) {
+  add(tableName: string, values: IFSetParam[]) {
     return new Promise((resolve) => {
       this.getTransaction(tableName, EnumOperateType.ReadWrite).then((objectStore: any) => {
-        const result = {
+        const result: any = {
           success: [],
           failed: []
         }
@@ -188,14 +188,14 @@ export default class UseIndexedDB implements IFClass {
    * @param tableName
    * @param keys
    */
-  delete(tableName, keys: string[]) {
+  delete(tableName: string, keys: string[]) {
     return new Promise((resolve) => {
       this.getTransaction(tableName, EnumOperateType.ReadWrite).then((objectStore: any) => {
-        const result = {
+        const result: any = {
           success: [],
           failed: []
         }
-        keys.forEach((key) => {
+        keys.forEach((key: string) => {
           const request = objectStore.delete(key);
           request.onsuccess = () => {
             result.success.push(key);
@@ -213,7 +213,7 @@ export default class UseIndexedDB implements IFClass {
    * 清空 objectStore
    * @param tableName
    */
-  clear(tableName) {
+  clear(tableName: string) {
     return new Promise((resolve, reject) => {
       this.getTransaction(tableName, EnumOperateType.ReadWrite).then((objectStore: any) => {
         const request = objectStore.clear();
@@ -234,20 +234,20 @@ export default class UseIndexedDB implements IFClass {
   getAll(tableName: string) {
     return new Promise((resolve, reject) => {
       this.getTransaction(tableName, EnumOperateType.ReadOnly).then((objectStore: any) => {
-        let result = [];
+        let result: any = [];
         let request;
         if (objectStore.getAll) {
           request = objectStore.getAll()
-          request.onsuccess = e => {
+          request.onsuccess = (e: any) => {
             result = e.target.result;
             resolve(result);
           };
-          request.onerror = e => {
+          request.onerror = (e: any) => {
             reject(e);
           };
         } else {
           request = objectStore.openCursor()
-          request.onsuccess = (e) => {
+          request.onsuccess = (e: any) => {
             const cursor = e.target.result;
             if (cursor) {
               result.push(cursor.value);
@@ -256,7 +256,7 @@ export default class UseIndexedDB implements IFClass {
               resolve(result);
             }
           };
-          request.onerror = e => {
+          request.onerror = (e: any) => {
             reject(e);
           };
         }

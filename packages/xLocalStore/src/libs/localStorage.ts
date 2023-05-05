@@ -1,12 +1,12 @@
-import { IFClass, IFSetParam} from './config';
+import type { IFClass, IFSetParam } from './config';
 
 export default class UseLocalStorage implements IFClass {
 
   dbName: string;
 
-  tableKeyPath = {};
+  tableKeyPath: any = {};
 
-  constructor(dbName) {
+  constructor(dbName: string) {
     this.dbName = dbName;
     if (!this.isSupport) {
       throw Error('Browser not support LocalStorage.');
@@ -17,7 +17,7 @@ export default class UseLocalStorage implements IFClass {
     return !!window.localStorage;
   }
 
-  createTable(version, tableName: string, keyPath: string) {
+  createTable(version: number, tableName: string, keyPath: string) {
     return new Promise((resolve) => {
       this.tableKeyPath[tableName] = keyPath;
       resolve(true);
@@ -51,7 +51,7 @@ export default class UseLocalStorage implements IFClass {
     })
   }
 
-  _setDBData(data) {
+  _setDBData(data: any) {
     return new Promise((resolve, reject) => {
       try {
         this._set(this.dbName, JSON.stringify(data));
@@ -64,12 +64,12 @@ export default class UseLocalStorage implements IFClass {
 
   get(tableName: string, value: string, keyPath = '') {
     return new Promise((resolve, reject) => {
-      this._getDBData().then((result) => {
+      this._getDBData().then((result: any) => {
         const useData = result;
         const useTableData = useData[tableName] || [];
         const useKeyPath = keyPath || this.tableKeyPath[tableName];
         let getValue;
-        useTableData.forEach((item) => {
+        useTableData.forEach((item: any) => {
           if (item[useKeyPath] === value) {
             getValue = item;
           }
@@ -83,7 +83,7 @@ export default class UseLocalStorage implements IFClass {
 
   getAll(tableName: string) {
     return new Promise((resolve, reject) => {
-      this._getDBData().then((result) => {
+      this._getDBData().then((result: any) => {
         resolve(result?.[tableName] || '');
       }).catch((e) => {
         reject(e);
@@ -93,15 +93,15 @@ export default class UseLocalStorage implements IFClass {
 
   set(tableName: string, values: IFSetParam[]) {
     return new Promise((resolve, reject) => {
-      this._getDBData().then((result) => {
+      this._getDBData().then((result: any) => {
         const useData = result;
         const useTableData = useData[tableName] || [];
         const useKeyPath = this.tableKeyPath[tableName];
-        const existsKeyPathValues = [];
-        useTableData.forEach((item) => {
+        const existsKeyPathValues: string[] = [];
+        useTableData.forEach((item: any) => {
           existsKeyPathValues.push(item[useKeyPath]);
         });
-        values.forEach((item) => {
+        values.forEach((item: any) => {
           const existsIndex = existsKeyPathValues.indexOf(item[useKeyPath]);
           if (existsIndex > -1) {
             useTableData[existsIndex] = item;
@@ -123,15 +123,15 @@ export default class UseLocalStorage implements IFClass {
 
   add(tableName: string, values: IFSetParam[]) {
     return new Promise((resolve, reject) => {
-      this._getDBData().then((result) => {
+      this._getDBData().then((result: any) => {
         const useData = result;
         const useTableData = useData[tableName] || [];
-        const existsKeyPathValues = [];
+        const existsKeyPathValues: string[] = [];
         const keyPath = this.tableKeyPath[tableName];
-        useTableData.forEach((item) => {
+        useTableData.forEach((item: any) => {
           existsKeyPathValues.push(item[keyPath]);
         });
-        values.forEach((item) => {
+        values.forEach((item: any) => {
           if (!existsKeyPathValues.includes(item[keyPath])) {
             useTableData.push(item);
           }
@@ -150,11 +150,11 @@ export default class UseLocalStorage implements IFClass {
 
   delete(tableName: string, keys: string[]) {
     return new Promise((resolve, reject) => {
-      this._getDBData().then((storeData) => {
-        const useData = [];
+      this._getDBData().then((storeData: any) => {
+        const useData: any = [];
         const useTableData = storeData[tableName] || [];
         const useKeyPath = this.tableKeyPath[tableName];
-        useTableData.forEach((item) => {
+        useTableData.forEach((item: any) => {
           if (!keys.includes(item[useKeyPath])) {
             useData.push(item);
           }
@@ -173,7 +173,7 @@ export default class UseLocalStorage implements IFClass {
 
   clear(tableName: string) {
     return new Promise((resolve, reject) => {
-      this._getDBData().then((result) => {
+      this._getDBData().then((result: any) => {
         const useDBData = { ...result };
         delete useDBData[tableName];
         this._setDBData(useDBData).then(() => {
