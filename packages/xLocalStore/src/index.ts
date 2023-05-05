@@ -10,8 +10,6 @@ import {
 class xLocalStore {
   storeIns: any;
 
-  isIndexedDB = true;
-
   version = 1;
 
   dbName = 'x_db';
@@ -31,21 +29,19 @@ class xLocalStore {
       if (config?.useStores) {
         this.useStores = config.useStores;
       }
-      this.useStores.forEach((storeObject) => {
-        switch (storeObject) {
+      for (let i=0; i<this.useStores.length; i+=1) {
+        switch (this.useStores[i]) {
           case EnumStoreType.INDEXEDDB:
             this.storeIns = new UseIndexedDB(this.dbName);
-            this.isIndexedDB = true;
             break;
           case EnumStoreType.LOCALSTORAGE:
             this.storeIns = new UseLocalStorage(this.dbName);
-            this.isIndexedDB = false;
             break;
         }
         if (this.storeIns.isSupport()) {
-          return false;
+          break;
         }
-      })
+      }
     } catch (e: any) {
       throw new Error(e);
     }

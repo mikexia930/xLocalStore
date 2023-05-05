@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import xLocalStore from '../packages/xLocalStore/src/index';
+import xLocalStore from '../dist/xlocalstore.es.js';
 import {
   type IFConfig as XLocalStoreIFConfig,
   EnumStoreType as XLocalStoreEnumStoreType,
@@ -49,8 +49,8 @@ const data = reactive<any>({
 });
 
 const storeConfig: Partial<XLocalStoreIFConfig> = {
-  dbName: 'testStore',
-  tableName: 'testStoreTable',
+  dbName: 'testLocalStore',
+  tableName: 'testLocalStoreTable',
   useStores: [ XLocalStoreEnumStoreType.INDEXEDDB, XLocalStoreEnumStoreType.LOCALSTORAGE ]
 }
 const storeIns = new xLocalStore(storeConfig);

@@ -1,5 +1,5 @@
 {
-  "name": "XLocalStore",
+  "name": "x-localstore",
   "description": "Custom store, Use IndexedDB first, if the browser do not support it, change to Localstorage",
   "keywords": [
     "IndexedDB",
