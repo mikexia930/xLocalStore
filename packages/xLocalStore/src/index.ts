@@ -54,8 +54,9 @@ class xLocalStore {
     return this.version;
   }
 
-  createTable(keyPath: string, index: Partial<IFIndexParam>[] = []) {
-    this.storeIns.createTable(this.version + 1, this.tableName, keyPath, index);
+  createTable(keyPath: string, index: Partial<IFIndexParam>[] = [], version: number = 0) {
+    this.version = version;
+    return this.storeIns.createTable(this.version, this.tableName, keyPath, index);
   }
 
   set(values: IFSetParam[]) {

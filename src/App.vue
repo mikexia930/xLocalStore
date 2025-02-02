@@ -33,7 +33,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import xLocalStore from '../dist/xlocalstore.es.js';
+//@ts-ignore
+import xLocalStore from 'x-localstore';
 import {
   type IFConfig as XLocalStoreIFConfig,
   EnumStoreType as XLocalStoreEnumStoreType,
